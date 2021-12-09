@@ -12,4 +12,10 @@ class Board
 
     @board[col].length < 6
   end
+
+  def add_chip(col, value)
+    return nil unless valid_move?(col)
+
+    @board[col] << value
+  end
 end
