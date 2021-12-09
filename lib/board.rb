@@ -45,4 +45,8 @@ class Board
 
     false
   end
+
+  def board_full?
+    @board.flatten.length >= 42
+  end
 end
