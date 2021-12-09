@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Board
     HEIGHT = 6
 
     def initialize
-      @board = Array.new(7) { Array.new }
+      @board = Array.new(7) { [] }
     end
 end
