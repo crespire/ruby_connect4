@@ -29,7 +29,7 @@ class Board
   def check_col_win
     @board.each do |column|
       column.each_cons(WIN) do |set|
-        set.uniq.count == 1
+        return true if set.uniq.count == 1
       end
     end
 
@@ -39,11 +39,14 @@ class Board
   def check_row_win
     @board.transpose.each do |row|
       row.each_cons(WIN) do |set|
-        set.uniq.count == 1
+        return true if set.uniq.count == 1
       end
     end
 
     false
+  end
+
+  def check_diag_win
   end
 
   def board_full?
