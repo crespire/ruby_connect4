@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# spec/game_spec.rb
+# spec/board_spec.rb
 
 require_relative '../lib/board'
 
