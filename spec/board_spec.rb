@@ -9,6 +9,7 @@ describe Board do
     subject(:board) { described_class.new }
     let(:board_var) { board.instance_variable_get(:@board) }
     let(:height) { described_class::HEIGHT }
+    let(:win) { described_class::WIN }
 
     it 'makes a board with 7 columns' do
       expect(board_var.length).to eq(7)
@@ -16,6 +17,10 @@ describe Board do
 
     it 'height is set to 6' do
       expect(height).to eq(6)
+    end
+
+    it 'win is set to 4 in a row' do
+      expect(win).to eq(4)
     end
   end
 

@@ -2,6 +2,7 @@
 
 class Board
   HEIGHT = 6
+  WIN = 4
 
   def initialize
     @board = Array.new(7) { [] }
@@ -17,5 +18,31 @@ class Board
     return nil unless valid_move?(col)
 
     @board[col] << value
+  end
+
+  def game_over?
+    return true if check_col_win || check_row_win
+  end
+
+  private
+
+  def check_col_win
+    @board.each do |column|
+      column.each_cons(WIN) do |set|
+        set.uniq.count == 1
+      end
+    end
+
+    false
+  end
+
+  def check_row_win
+    @board.transpose.each do |row|
+      row.each_cons(WIN) do |set|
+        set.uniq.count == 1
+      end
+    end
+
+    false
   end
 end
