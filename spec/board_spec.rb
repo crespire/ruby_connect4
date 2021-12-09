@@ -2,9 +2,9 @@
 
 # spec/game_spec.rb
 
-require_relative '../lib/game'
+require_relative '../lib/board'
 
-describe Game do
+describe Board do
   describe '#initialize' do
     subject(:init_game) { described_class.new }
     let(:board) { init_game.instance_variable_get(:@board) }

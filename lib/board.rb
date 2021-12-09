@@ -1,4 +1,4 @@
-class Game
+class Board
     HEIGHT = 6
 
     def initialize
