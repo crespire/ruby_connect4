@@ -130,11 +130,11 @@ describe Board do
       subject(:full_game) { described_class.new }
 
       it 'returns false when there is only one space left' do
-        6.times do |i|
+        6.times do
           7.times do |j|
             next if i == 5 && j == 6
 
-            full_game.add_chip(j, (65+rand(26)).chr)
+            full_game.add_chip(j, (65 + rand(26)).chr)
           end
         end
 
@@ -142,9 +142,9 @@ describe Board do
       end
 
       it 'returns true when the board is full, without a winner' do
-        6.times do |i|
+        6.times do
           7.times do |j|
-            full_game.add_chip(j, (65+rand(26)).chr)
+            full_game.add_chip(j, (65 + rand(26)).chr)
           end
         end
 
@@ -171,9 +171,9 @@ describe Board do
         subject(:row_game) { described_class.new }
 
         it 'returns true on a row win with non-winning chips below' do
-          3.times do |i|
+          3.times do
             7.times do |j|
-              row_game.add_chip(j, (65+rand(26)).chr)
+              row_game.add_chip(j, (65 + rand(26)).chr)
             end
           end
           4.times { |i| row_game.add_chip(i, 'a') }
@@ -187,9 +187,9 @@ describe Board do
         end
 
         it 'returns false on three in a row with non-winning chips below' do
-          3.times do |i|
+          3.times do
             7.times do |j|
-              row_game.add_chip(j, (65+rand(26)).chr)
+              row_game.add_chip(j, (65 + rand(26)).chr)
             end
           end
           3.times { |i| row_game.add_chip(i, 'a') }
