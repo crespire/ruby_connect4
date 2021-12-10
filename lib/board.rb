@@ -26,10 +26,11 @@ class Board
     return true if check_diag_win
     return true if full?
 
-    false
+    return false
   end
 
   def full?
+    puts "Full: #{@board}"
     @board.flatten.length >= 42
   end
 
@@ -44,7 +45,7 @@ class Board
   end
 
   def check_row_win
-    nil_fill = @board.dup
+    nil_fill = @board.clone
     nil_fill.each do |column|
       column << nil until column.length == HEIGHT
     end
