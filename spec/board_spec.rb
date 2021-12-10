@@ -8,6 +8,7 @@ describe Board do
   describe '#initialize' do
     subject(:board) { described_class.new }
     let(:board_var) { board.instance_variable_get(:@board) }
+    let(:last_var) { board.last_move }
     let(:height) { described_class::HEIGHT }
     let(:win) { described_class::WIN }
 
@@ -15,11 +16,15 @@ describe Board do
       expect(board_var.length).to eq(7)
     end
 
-    it 'height is set to 6' do
+    it 'sets @last_move to nil' do
+      expect(last_var).to be_nil
+    end
+
+    it 'sets height constant to 6' do
       expect(height).to eq(6)
     end
 
-    it 'win is set to 4 in a row' do
+    it 'sets win constant to 4' do
       expect(win).to eq(4)
     end
   end
@@ -52,10 +57,16 @@ describe Board do
 
     context 'after input validation' do
       let(:board_var) { board_add.instance_variable_get(:@board) }
+      let(:last_var) { board_add.last_move }
 
       it 'adds a chip to the correct column' do
         board_add.add_chip(4, 1)
         expect(board_var.dig(4, 0)).to eq(1)
+      end
+
+      it 'updates @last_move' do
+        board_add.add_chip(4, 1)
+        expect(last_var).to eq(1)
       end
 
       it 'stacks a chip if a column already has a value' do
@@ -67,6 +78,17 @@ describe Board do
       it 'returns nil when trying to add to a full column' do
         6.times { board_add.add_chip(2, 1) }
         expect(board_add.add_chip(2, 1)).to be nil
+      end
+    end
+  end
+
+  describe 'attr_reader for last_move' do
+    context 'when there is a winner' do
+      subject(:win_token) { described_class.new }
+
+      it 'returns the last move that cause a win' do
+        (1..4).to_a.each { |i| win_token.add_chip(i, 'a') }
+        expect(win_token.last_move).to eq('a')
       end
     end
   end
@@ -100,7 +122,7 @@ describe Board do
             winner_game.add_chip(j, i == 1 ? 'b' : 'a')
           end
         end
-        expect(winner_game.check_diag_win).to eq(true)
+        expect(winner_game).to be_gameover
       end
     end
 
@@ -140,7 +162,7 @@ describe Board do
         col_game.add_chip(1, 'c')
         col_game.add_chip(1, 'a')
 
-        expect(col_game.check_col_win).to eq(false)
+        expect(col_game).to_not be_winner
       end
     end
 
@@ -155,12 +177,12 @@ describe Board do
         end
         4.times { |i| row_game.add_chip(i, 'a') }
 
-        expect(row_game.check_row_win).to eq(true)
+        expect(row_game).to be_winner
       end
 
       it 'returns false on three in a row' do
         3.times { |i| row_game.add_chip(i, 'a') }
-        expect(row_game.check_row_win).to eq(false)
+        expect(row_game).to_not be_winner
       end
 
       it 'returns false on three in a row with non-winning chips below' do
@@ -170,7 +192,7 @@ describe Board do
           end
         end
         3.times { |i| row_game.add_chip(i, 'a') }
-        expect(row_game.check_row_win).to eq(false)
+        expect(row_game).to_not be_winner
       end
 
       it 'returns false in the case of 4 same chips in a row, but not adjacent' do
@@ -186,7 +208,7 @@ describe Board do
         row_game.add_chip(4, 'b')
         row_game.add_chip(5, 'a')
 
-        expect(row_game.check_row_win).to eq(false)
+        expect(row_game).to_not be_winner
       end
     end
 
@@ -214,7 +236,7 @@ describe Board do
         diag_game.add_chip(4, 'b')
         diag_game.add_chip(4, 'a')
 
-        expect(diag_game.check_diag_win).to eq(false)
+        expect(diag_game).to_not be_winner
       end
 
       it 'returns false if there are 4 same chips on a \ diag, but not adjacent' do
@@ -238,7 +260,7 @@ describe Board do
 
         diag_game.add_chip(5, 'a')
 
-        expect(diag_game.check_diag_win).to eq(false)
+        expect(diag_game).to_not be_winner
       end
     end
   end

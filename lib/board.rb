@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 class Board
+  attr_reader :last_move
+
   HEIGHT = 6
   WIN = 4
 
   def initialize
     @board = Array.new(7) { [] }
+    @last_move = nil
   end
 
   def valid_move?(col)
@@ -18,6 +21,12 @@ class Board
     return nil unless valid_move?(col)
 
     @board[col] << value
+    update_move(value)
+  end
+
+  def update_move(value)
+    @last_move = value
+    true
   end
 
   def gameover?
@@ -35,6 +44,8 @@ class Board
 
     false
   end
+
+  private
 
   def check_col_win
     @board.each do |column|
