@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# lib/board.rb
+
 class Board
   attr_reader :last_move
 
