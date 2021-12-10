@@ -71,12 +71,29 @@ describe Board do
     end
   end
 
-  describe '#game_over?' do
+  describe '#gameover?' do
     context 'when there is a winner' do
-      xit 'returns true on row win' do
+      subject(:winner_game) { described_class.new }
+
+      it 'returns true on row win' do
+        (1..4).to_a.each { |i| winner_game.add_chip(i, 'a') }
+        expect(winner_game).to be_gameover
       end
 
-      xit 'returns true on a column win' do
+      it 'returns false on three in a row' do
+        winner_game.add_chip(0, 'a')
+        winner_game.add_chip(1, 'a')
+        winner_game.add_chip(2, 'a')
+        expect(winner_game).to_not be_gameover
+      end
+
+      xit 'returns true on stacked row win' do
+        # set up a game where the win is on a second row, with the first with 3
+      end
+
+      it 'returns true on a column win' do
+        4.times { winner_game.add_chip(2, 'a') }
+        expect(winner_game).to be_gameover
       end
 
       xit 'returns true on a / diagonal win' do
