@@ -28,7 +28,6 @@ class Board
 
   def update_move(value)
     @last_move = value
-    true
   end
 
   def gameover?
