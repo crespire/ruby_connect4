@@ -152,115 +152,117 @@ describe Board do
       end
     end
 
-    context 'edge case for helper #check_col_win' do
-      subject(:col_game) { described_class.new }
+    context '#winner helper' do
+      context 'edge case for private helper #check_col_win' do
+        subject(:col_game) { described_class.new }
 
-      it 'returns false in the case of 4 chips in a column, but not adjacent' do
-        col_game.add_chip(1, 'a')
-        col_game.add_chip(1, 'a')
-        col_game.add_chip(1, 'a')
-        col_game.add_chip(1, 'c')
-        col_game.add_chip(1, 'a')
+        it 'returns false in the case of 4 chips in a column, but not adjacent' do
+          col_game.add_chip(1, 'a')
+          col_game.add_chip(1, 'a')
+          col_game.add_chip(1, 'a')
+          col_game.add_chip(1, 'c')
+          col_game.add_chip(1, 'a')
 
-        expect(col_game).to_not be_winner
-      end
-    end
-
-    context 'edge cases for helper #check_row_win' do
-      subject(:row_game) { described_class.new }
-
-      it 'returns true on a row win with non-winning chips below' do
-        3.times do |i|
-          7.times do |j|
-            row_game.add_chip(j, (65+rand(26)).chr)
-          end
+          expect(col_game).to_not be_winner
         end
-        4.times { |i| row_game.add_chip(i, 'a') }
-
-        expect(row_game).to be_winner
       end
 
-      it 'returns false on three in a row' do
-        3.times { |i| row_game.add_chip(i, 'a') }
-        expect(row_game).to_not be_winner
-      end
+      context 'edge cases for private helper #check_row_win' do
+        subject(:row_game) { described_class.new }
 
-      it 'returns false on three in a row with non-winning chips below' do
-        3.times do |i|
-          7.times do |j|
-            row_game.add_chip(j, (65+rand(26)).chr)
+        it 'returns true on a row win with non-winning chips below' do
+          3.times do |i|
+            7.times do |j|
+              row_game.add_chip(j, (65+rand(26)).chr)
+            end
           end
-        end
-        3.times { |i| row_game.add_chip(i, 'a') }
-        expect(row_game).to_not be_winner
-      end
+          4.times { |i| row_game.add_chip(i, 'a') }
 
-      it 'returns false in the case of 4 same chips in a row, but not adjacent' do
-        3.times do |i|
-          7.times do |j|
-            row_game.add_chip(j, ((j % 2) + i % 2).to_s)
-          end
+          expect(row_game).to be_winner
         end
 
-        row_game.add_chip(1, 'a')
-        row_game.add_chip(2, 'a')
-        row_game.add_chip(3, 'a')
-        row_game.add_chip(4, 'b')
-        row_game.add_chip(5, 'a')
+        it 'returns false on three in a row' do
+          3.times { |i| row_game.add_chip(i, 'a') }
+          expect(row_game).to_not be_winner
+        end
 
-        expect(row_game).to_not be_winner
-      end
-    end
+        it 'returns false on three in a row with non-winning chips below' do
+          3.times do |i|
+            7.times do |j|
+              row_game.add_chip(j, (65+rand(26)).chr)
+            end
+          end
+          3.times { |i| row_game.add_chip(i, 'a') }
+          expect(row_game).to_not be_winner
+        end
 
-    context 'edge cases for helper #check_diag_win' do
-      subject(:diag_game) { described_class.new }
+        it 'returns false in the case of 4 same chips in a row, but not adjacent' do
+          3.times do |i|
+            7.times do |j|
+              row_game.add_chip(j, ((j % 2) + i % 2).to_s)
+            end
+          end
 
-      it 'returns false if there are 4 same chips on a / diag, but not adjacent' do
-        diag_game.add_chip(0, 'a')
+          row_game.add_chip(1, 'a')
+          row_game.add_chip(2, 'a')
+          row_game.add_chip(3, 'a')
+          row_game.add_chip(4, 'b')
+          row_game.add_chip(5, 'a')
 
-        diag_game.add_chip(1, 'b')
-        diag_game.add_chip(1, 'a')
-
-        diag_game.add_chip(2, 'c')
-        diag_game.add_chip(2, 'j')
-        diag_game.add_chip(2, 'a')
-
-        diag_game.add_chip(3, 'd')
-        diag_game.add_chip(3, 'x')
-        diag_game.add_chip(3, 'b')
-        diag_game.add_chip(3, 'b')
-
-        diag_game.add_chip(4, 'e')
-        diag_game.add_chip(4, 'q')
-        diag_game.add_chip(4, 'c')
-        diag_game.add_chip(4, 'b')
-        diag_game.add_chip(4, 'a')
-
-        expect(diag_game).to_not be_winner
+          expect(row_game).to_not be_winner
+        end
       end
 
-      it 'returns false if there are 4 same chips on a \ diag, but not adjacent' do
-        diag_game.add_chip(1, 'e')
-        diag_game.add_chip(1, 'q')
-        diag_game.add_chip(1, 'c')
-        diag_game.add_chip(1, 'b')
-        diag_game.add_chip(1, 'a')
+      context 'edge cases for private helper #check_diag_win' do
+        subject(:diag_game) { described_class.new }
 
-        diag_game.add_chip(2, 'd')
-        diag_game.add_chip(2, 'x')
-        diag_game.add_chip(2, 'b')
-        diag_game.add_chip(2, 'b')
+        it 'returns false if there are 4 same chips on a / diag, but not adjacent' do
+          diag_game.add_chip(0, 'a')
 
-        diag_game.add_chip(3, 'c')
-        diag_game.add_chip(3, 'j')
-        diag_game.add_chip(3, 'a')
+          diag_game.add_chip(1, 'b')
+          diag_game.add_chip(1, 'a')
 
-        diag_game.add_chip(4, 'b')
-        diag_game.add_chip(4, 'a')
+          diag_game.add_chip(2, 'c')
+          diag_game.add_chip(2, 'j')
+          diag_game.add_chip(2, 'a')
 
-        diag_game.add_chip(5, 'a')
+          diag_game.add_chip(3, 'd')
+          diag_game.add_chip(3, 'x')
+          diag_game.add_chip(3, 'b')
+          diag_game.add_chip(3, 'b')
 
-        expect(diag_game).to_not be_winner
+          diag_game.add_chip(4, 'e')
+          diag_game.add_chip(4, 'q')
+          diag_game.add_chip(4, 'c')
+          diag_game.add_chip(4, 'b')
+          diag_game.add_chip(4, 'a')
+
+          expect(diag_game).to_not be_winner
+        end
+
+        it 'returns false if there are 4 same chips on a \ diag, but not adjacent' do
+          diag_game.add_chip(1, 'e')
+          diag_game.add_chip(1, 'q')
+          diag_game.add_chip(1, 'c')
+          diag_game.add_chip(1, 'b')
+          diag_game.add_chip(1, 'a')
+
+          diag_game.add_chip(2, 'd')
+          diag_game.add_chip(2, 'x')
+          diag_game.add_chip(2, 'b')
+          diag_game.add_chip(2, 'b')
+
+          diag_game.add_chip(3, 'c')
+          diag_game.add_chip(3, 'j')
+          diag_game.add_chip(3, 'a')
+
+          diag_game.add_chip(4, 'b')
+          diag_game.add_chip(4, 'a')
+
+          diag_game.add_chip(5, 'a')
+
+          expect(diag_game).to_not be_winner
+        end
       end
     end
   end
