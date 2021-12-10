@@ -21,16 +21,12 @@ class Board
   end
 
   def gameover?
-    return true if check_col_win
-    return true if check_row_win
-    return true if check_diag_win
-    return true if full?
+    return true if check_col_win || check_row_win || check_diag_win || full?
 
     return false
   end
 
   def full?
-    puts "Full: #{@board}"
     @board.flatten.length >= 42
   end
 
@@ -45,7 +41,7 @@ class Board
   end
 
   def check_row_win
-    nil_fill = @board.clone
+    nil_fill = Marshal.load(Marshal.dump(@board))
     nil_fill.each do |column|
       column << nil until column.length == HEIGHT
     end

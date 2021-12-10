@@ -85,14 +85,7 @@ describe Board do
         winner_game.add_chip(1, 'a')
         winner_game.add_chip(2, 'a')
 
-        # decomposed methods are returning the right thing.
-        expect(winner_game.check_col_win).to eq(false)
-        expect(winner_game.check_row_win).to eq(false)
-        expect(winner_game.check_diag_win).to eq(false)
-        expect(winner_game.full?).to eq(false)
-
-        # prediate method seems to return True
-        expect(winner_game.gameover?).to eq(false)
+        expect(winner_game).to_not be_gameover
       end
 
       xit 'returns true on stacked row win' do
