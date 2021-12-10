@@ -26,10 +26,6 @@ class Board
     update_move(value)
   end
 
-  def update_move(value)
-    @last_move = value
-  end
-
   def gameover?
     return true if winner? || full?
 
@@ -47,6 +43,10 @@ class Board
   end
 
   private
+
+  def update_move(value)
+    @last_move = value
+  end
 
   def check_col_win
     @board.each do |column|
