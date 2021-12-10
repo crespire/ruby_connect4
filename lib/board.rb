@@ -50,7 +50,7 @@ class Board
   def check_col_win
     @board.each do |column|
       column.each_cons(WIN) do |set|
-        next if set.include?(nil)
+        next if set.length < 4 || set.include?(nil)
 
         return true if set.uniq.count == 1
       end
@@ -67,7 +67,7 @@ class Board
 
     nil_fill.transpose.each do |row|
       row.each_cons(WIN) do |set|
-        next if set.include?(nil)
+        next if set.length < 4 || set.include?(nil)
 
         return true if set.uniq.count == 1
       end

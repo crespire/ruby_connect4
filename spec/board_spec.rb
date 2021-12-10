@@ -130,7 +130,7 @@ describe Board do
       subject(:full_game) { described_class.new }
 
       it 'returns false when there is only one space left' do
-        6.times do
+        6.times do |i|
           7.times do |j|
             next if i == 5 && j == 6
 
