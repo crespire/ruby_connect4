@@ -80,35 +80,165 @@ describe Board do
         expect(winner_game).to be_gameover
       end
 
-      it 'returns false on three in a row' do
-        winner_game.add_chip(0, 'a')
-        winner_game.add_chip(1, 'a')
-        winner_game.add_chip(2, 'a')
-
-        expect(winner_game).to_not be_gameover
-      end
-
-      xit 'returns true on stacked row win' do
-        # set up a game where the win is on a second row, with the first with 3
-      end
-
       it 'returns true on a column win' do
         4.times { winner_game.add_chip(2, 'a') }
         expect(winner_game).to be_gameover
       end
 
-      xit 'returns true on a / diagonal win' do
+      it 'returns true on a / diagonal win' do
+        (1..4).to_a.reverse_each do |i|
+          (1..i).to_a.reverse_each do |j|
+            winner_game.add_chip(i, j == 1 ? 'b' : 'a')
+          end
+        end
+        expect(winner_game).to be_gameover
       end
 
-      xit 'returns true on a \ diagonal win' do
+      it 'returns true on a \ diagonal win' do
+        (1..4).to_a.each do |i|
+          (1..i).to_a.each do |j|
+            winner_game.add_chip(j, i == 1 ? 'b' : 'a')
+          end
+        end
+        expect(winner_game.check_diag_win).to eq(true)
       end
     end
 
     context 'when the board is full with no winner' do
-      xit 'returns false when there is only one space left' do
+      subject(:full_game) { described_class.new }
+
+      it 'returns false when there is only one space left' do
+        6.times do |i|
+          7.times do |j|
+            next if i == 5 && j == 6
+
+            full_game.add_chip(j, (65+rand(26)).chr)
+          end
+        end
+
+        expect(full_game).to_not be_gameover
       end
 
-      xit 'returns true when the board is full, without a winner' do
+      it 'returns true when the board is full, without a winner' do
+        6.times do |i|
+          7.times do |j|
+            full_game.add_chip(j, (65+rand(26)).chr)
+          end
+        end
+
+        expect(full_game).to be_gameover
+      end
+    end
+
+    context 'edge case for helper #check_col_win' do
+      subject(:col_game) { described_class.new }
+
+      it 'returns false in the case of 4 chips in a column, but not adjacent' do
+        col_game.add_chip(1, 'a')
+        col_game.add_chip(1, 'a')
+        col_game.add_chip(1, 'a')
+        col_game.add_chip(1, 'c')
+        col_game.add_chip(1, 'a')
+
+        expect(col_game.check_col_win).to eq(false)
+      end
+    end
+
+    context 'edge cases for helper #check_row_win' do
+      subject(:row_game) { described_class.new }
+
+      it 'returns true on a row win with non-winning chips below' do
+        3.times do |i|
+          7.times do |j|
+            row_game.add_chip(j, (65+rand(26)).chr)
+          end
+        end
+        4.times { |i| row_game.add_chip(i, 'a') }
+
+        expect(row_game.check_row_win).to eq(true)
+      end
+
+      it 'returns false on three in a row' do
+        3.times { |i| row_game.add_chip(i, 'a') }
+        expect(row_game.check_row_win).to eq(false)
+      end
+
+      it 'returns false on three in a row with non-winning chips below' do
+        3.times do |i|
+          7.times do |j|
+            row_game.add_chip(j, (65+rand(26)).chr)
+          end
+        end
+        3.times { |i| row_game.add_chip(i, 'a') }
+        expect(row_game.check_row_win).to eq(false)
+      end
+
+      it 'returns false in the case of 4 same chips in a row, but not adjacent' do
+        3.times do |i|
+          7.times do |j|
+            row_game.add_chip(j, ((j % 2) + i % 2).to_s)
+          end
+        end
+
+        row_game.add_chip(1, 'a')
+        row_game.add_chip(2, 'a')
+        row_game.add_chip(3, 'a')
+        row_game.add_chip(4, 'b')
+        row_game.add_chip(5, 'a')
+
+        expect(row_game.check_row_win).to eq(false)
+      end
+    end
+
+    context 'edge cases for helper #check_diag_win' do
+      subject(:diag_game) { described_class.new }
+
+      it 'returns false if there are 4 same chips on a / diag, but not adjacent' do
+        diag_game.add_chip(0, 'a')
+
+        diag_game.add_chip(1, 'b')
+        diag_game.add_chip(1, 'a')
+
+        diag_game.add_chip(2, 'c')
+        diag_game.add_chip(2, 'j')
+        diag_game.add_chip(2, 'a')
+
+        diag_game.add_chip(3, 'd')
+        diag_game.add_chip(3, 'x')
+        diag_game.add_chip(3, 'b')
+        diag_game.add_chip(3, 'b')
+
+        diag_game.add_chip(4, 'e')
+        diag_game.add_chip(4, 'q')
+        diag_game.add_chip(4, 'c')
+        diag_game.add_chip(4, 'b')
+        diag_game.add_chip(4, 'a')
+
+        expect(diag_game.check_diag_win).to eq(false)
+      end
+
+      it 'returns false if there are 4 same chips on a \ diag, but not adjacent' do
+        diag_game.add_chip(1, 'e')
+        diag_game.add_chip(1, 'q')
+        diag_game.add_chip(1, 'c')
+        diag_game.add_chip(1, 'b')
+        diag_game.add_chip(1, 'a')
+
+        diag_game.add_chip(2, 'd')
+        diag_game.add_chip(2, 'x')
+        diag_game.add_chip(2, 'b')
+        diag_game.add_chip(2, 'b')
+
+        diag_game.add_chip(3, 'c')
+        diag_game.add_chip(3, 'j')
+        diag_game.add_chip(3, 'a')
+
+        diag_game.add_chip(4, 'b')
+        diag_game.add_chip(4, 'a')
+
+        diag_game.add_chip(5, 'a')
+
+        expect(diag_game.check_diag_win).to eq(false)
       end
     end
   end

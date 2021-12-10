@@ -21,18 +21,26 @@ class Board
   end
 
   def gameover?
-    return true if check_col_win || check_row_win || check_diag_win || full?
+    return true if winner? || full?
 
-    return false
+    false
   end
 
   def full?
     @board.flatten.length >= 42
   end
 
+  def winner?
+    return true if check_col_win || check_row_win || check_diag_win
+
+    false
+  end
+
   def check_col_win
     @board.each do |column|
       column.each_cons(WIN) do |set|
+        next if set.include?(nil)
+
         return true if set.uniq.count == 1
       end
     end
@@ -48,7 +56,7 @@ class Board
 
     nil_fill.transpose.each do |row|
       row.each_cons(WIN) do |set|
-        next if set.count(nil).positive?
+        next if set.include?(nil)
 
         return true if set.uniq.count == 1
       end
@@ -59,8 +67,7 @@ class Board
 
   def check_diag_win
     reverse = @board.reverse
-    return true if diag_win(@board)
-    return true if diag_win(reverse)
+    return true if diag_win(@board) || diag_win(reverse)
 
     false
   end
@@ -76,12 +83,11 @@ class Board
         (1...WIN).to_a.each do |k|
           break if board[k + i][k + j].nil?
 
-          temp.push(board[k + 1][k + j])
+          temp << board[k + i][k + j]
           return true if temp.length == WIN && temp.uniq.length == 1
         end
       end
     end
-
     false
   end
 end
