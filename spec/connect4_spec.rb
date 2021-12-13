@@ -18,6 +18,15 @@ require_relative '../lib/connect4'
 require_relative '../lib/board'
 
 describe Connect4 do
-  describe '#initialize' do
+  describe '#show_rules' do
+    subject(:c4_rules) { described_class.new(display: display) }
+    let(:display) { double('Display') }
+
+    it 'should send Display the print_rules message' do
+      allow(display).to receive(:print_rules)
+
+      expect(display).to receive(:print_rules).once
+      c4_rules.show_rules
+    end
   end
 end

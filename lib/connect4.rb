@@ -5,9 +5,13 @@
 require_relative 'board'
 
 class Connect4
-  def initialize(board: Board.new)
-    @board = board
+  def initialize(display: Display.new)
+    @board = Board.new
     @players = []
-    @display = Display.new
+    @display = display
+  end
+
+  def show_rules
+    @display.print_rules
   end
 end
