@@ -42,7 +42,7 @@ describe Connect4 do
     end
   end
 
-  describe '#after_round' do
+  describe '#show_after' do
     subject(:c4_after) { described_class.new(display: display) }
     let(:display) { double('Display') }
 
