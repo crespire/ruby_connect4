@@ -29,4 +29,28 @@ describe Connect4 do
       c4_rules.show_rules
     end
   end
+
+  describe '#show_board' do
+    subject(:c4_board) { described_class.new(display: display) }
+    let(:display) { double('Display') }
+
+    it 'should send Display the print_rules message' do
+      allow(display).to receive(:print_board)
+
+      expect(display).to receive(:print_board).once
+      c4_board.show_board
+    end
+  end
+
+  describe '#after_round' do
+    subject(:c4_after) { described_class.new(display: display) }
+    let(:display) { double('Display') }
+
+    it 'should send Display the print_rules message' do
+      allow(display).to receive(:print_after)
+
+      expect(display).to receive(:print_after).once
+      c4_after.show_after
+    end
+  end
 end

@@ -62,10 +62,7 @@ class Board
 
   def check_row_win
     nil_fill = Marshal.load(Marshal.dump(@board))
-    nil_fill.each do |column|
-      column << nil until column.length == HEIGHT
-    end
-
+    nil_fill.each { |column| column << nil until column.length == HEIGHT }
     nil_fill.transpose.each do |row|
       row.each_cons(WIN) do |set|
         next if set.length < 4 || set.include?(nil)

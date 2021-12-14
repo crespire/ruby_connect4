@@ -14,4 +14,12 @@ class Connect4
   def show_rules
     @display.print_rules
   end
+
+  def show_board
+    @display.print_board
+  end
+
+  def show_after
+    @display.print_after
+  end
 end
