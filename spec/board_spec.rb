@@ -59,6 +59,11 @@ describe Board do
       let(:board_var) { board_add.instance_variable_get(:@board) }
       let(:last_var) { board_add.last_move }
 
+      it 'returns true on a successful addition' do
+        result = board_add.add_chip(4, 1)
+        expect(result).to be_truthy
+      end
+
       it 'adds a chip to the correct column' do
         board_add.add_chip(4, 1)
         expect(board_var.dig(4, 0)).to eq(1)
@@ -75,9 +80,9 @@ describe Board do
         expect(board_var[2].length).to eq(2)
       end
 
-      it 'returns nil when trying to add to a full column' do
+      it 'returns false when trying to add to a full column' do
         6.times { board_add.add_chip(2, 1) }
-        expect(board_add.add_chip(2, 1)).to be nil
+        expect(board_add.add_chip(2, 1)).to be_falsy
       end
     end
   end

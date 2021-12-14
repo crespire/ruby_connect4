@@ -20,10 +20,12 @@ class Board
   end
 
   def add_chip(col, value)
-    return nil unless valid_move?(col)
+    return false unless valid_move?(col)
 
     @board[col] << value
     update_move(value)
+
+    true
   end
 
   def gameover?
