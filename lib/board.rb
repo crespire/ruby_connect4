@@ -14,7 +14,7 @@ class Board
   end
 
   def valid_move?(col)
-    return nil if @board[col].nil?
+    return false if @board[col].nil?
 
     @board[col].length < 6
   end

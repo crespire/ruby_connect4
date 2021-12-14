@@ -39,8 +39,8 @@ describe Board do
         expect(board_move.valid_move?(3)).to be_truthy
       end
 
-      it 'returns nil given an out-of-bounds column' do
-        expect(board_move.valid_move?(9)).to be_nil
+      it 'returns false given an out-of-bounds column' do
+        expect(board_move.valid_move?(9)).to be_falsy
       end
     end
 
