@@ -9,7 +9,7 @@ class Connect4
     @board = Board.new
     @players = []
     @display = display
-    @turns = 0
+    @moves = 0
   end
 
   def show_rules
@@ -32,8 +32,33 @@ class Connect4
     @players << player
   end
 
-  def prompt_game_input(player)
+  def prompt_game_input
     @display.game_input
-    player.game_input
+    @players[@moves % 2].game_input
+  end
+
+  def play_round
+    input = nil
+    until @board.valid_move?(input)
+      input = prompt_game_input
+      puts 'Invalid move, please enter another.' unless @board.valid_move?(input)
+    end
+    @board.add_chip(input, @players[@moves % 2].token)
+    increment_move
+  end
+
+  def play
+    play_round until @board.gameover?
+  end
+
+  def prompt_yn
+    @display.ask_yn
+    @players[@moves % 2].reply_yn
+  end
+
+  private
+
+  def increment_move
+    @moves += 1
   end
 end
