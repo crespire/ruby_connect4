@@ -49,6 +49,7 @@ class Connect4
 
   def play
     play_round until @board.gameover?
+    show_after
   end
 
   def prompt_yn

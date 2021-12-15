@@ -193,4 +193,19 @@ describe Connect4 do
       expect(input).to eq('y')
     end
   end
+
+  describe '#play' do
+    context 'when simulating a game with one move left' do
+      subject(:c4_play) { described_class.new(display: display) }
+
+      it 'should send play_round once and then send show_after' do
+        board = c4_play.instance_variable_get(:@board)
+        allow(board).to receive(:gameover?).and_return(false, true)
+
+        expect(c4_play).to receive(:play_round).once
+        expect(c4_play).to receive(:show_after).once
+        c4_play.play
+      end
+    end
+  end
 end
