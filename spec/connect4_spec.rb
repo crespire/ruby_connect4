@@ -2,18 +2,6 @@
 
 # spec/board_spec.rb
 
-=begin
-  Remember, TEST THE INTERFACE.
-  Query messages return some value, don't change anything.
-  Command messages return nothing, change something.
-
-  Sometimes, a message can have elements of both query and command.
-
-  Key is to remember this spec file tests Connect4. So we only test
-  expectations for query messages. ie, Connect4 receives message and
-  returns expected result.
-=end
-
 require_relative '../lib/connect4'
 require_relative '../lib/board'
 
@@ -61,8 +49,7 @@ describe Connect4 do
       allow(display).to receive(:player_add)
 
       expect(display).to receive(:player_add).once
-      name = c4_addplayer.prompt_player_add
-      
+      c4_addplayer.prompt_player_add
     end
 
     it "should return the new player's name" do
