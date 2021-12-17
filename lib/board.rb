@@ -45,6 +45,10 @@ class Board
     false
   end
 
+  def get_data
+    @board
+  end
+
   private
 
   def update_move(value)
