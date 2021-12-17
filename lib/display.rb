@@ -21,13 +21,15 @@ class Display
   def rules
   end
 
-  def after
+  def after(board, players)
+    # Get last_move from board, and find player with that token.
   end
 
   def add_player
   end
 
-  def game_input
+  def game_input(player)
+    # Prompt player
   end
 
   def ask_yn

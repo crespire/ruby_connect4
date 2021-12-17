@@ -17,11 +17,11 @@ class Connect4
   end
 
   def show_board
-    @display.board
+    @display.board(@board)
   end
 
   def show_after
-    @display.after
+    @display.after(@board, @players)
   end
 
   def prompt_player_add
@@ -33,7 +33,7 @@ class Connect4
   end
 
   def prompt_game_input
-    @display.game_input
+    @display.game_input(@players[@moves % 2])
     @players[@moves % 2].game_input
   end
 
