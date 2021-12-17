@@ -3,7 +3,7 @@
 # lib/display.rb
 
 class Display
-  def print_board(board)
+  def board(board)
     row_index = Board::HEIGHT - 1
     board_data = board.get_data
     until row_index.negative?
@@ -16,5 +16,20 @@ class Display
       print "\n"
       row_index -= 1
     end
+  end
+
+  def rules
+  end
+
+  def after
+  end
+
+  def add_player
+  end
+
+  def game_input
+  end
+
+  def ask_yn
   end
 end
