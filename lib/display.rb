@@ -38,8 +38,6 @@ class Display
 
   def player_add
     print "What is your name? "
-    name = gets.chomp
-    name 
   end
 
   def invalid_input
