@@ -3,9 +3,7 @@
 # lib/display.rb
 
 class Display
-  def initialize
-    @display_index = 0
-  end
+  def initialize; end
 
   def board(board)
     row_index = Board::HEIGHT - 1
