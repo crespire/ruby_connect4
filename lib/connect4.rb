@@ -53,7 +53,7 @@ class Connect4
   end
 
   def prompt_yn
-    @display.ask_yn
+    @display.ask_yn('Would you like to play again?')
     @players[@moves % 2].reply_yn
   end
 

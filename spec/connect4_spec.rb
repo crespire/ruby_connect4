@@ -153,7 +153,8 @@ describe Connect4 do
       it 'should re-prompt a player when an invalid move is entered' do
         error = 'Invalid move, please enter another.'
         allow(player).to receive(:game_input).and_return('1', 4)
-        expect(c4_round).to receive(:puts).with(error).once
+        allow(display).to receive(:invalid_input)
+        expect(display).to receive(:invalid_input).once
         c4_round.play_round
       end
 
