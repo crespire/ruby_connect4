@@ -3,6 +3,10 @@
 # lib/display.rb
 
 class Display
+  def initialize
+    @display_index = 0
+  end
+
   def board(board)
     row_index = Board::HEIGHT - 1
     board_data = board.get_data
@@ -19,19 +23,40 @@ class Display
   end
 
   def rules
+    puts <<~RULES
+    Welcome to Connect4. The goal is to get 4 tokens in a row.
+    Like the physical game, you can only stack tokens if there are previous ones.
+    The first to four wins!
+    RULES
   end
 
   def after(board, players)
-    # Get last_move from board, and find player with that token.
+    winner = board.last_move
+    name = players.select { |player| return player.name if player.token == winner}
+    puts "The winner is #{name}!"
   end
 
-  def add_player
+  def player_add
+    print "What is your name? "
+    name = gets.chomp
+    name 
   end
 
-  def game_input(player)
-    # Prompt player
+  def invalid_input
+    puts 'Invalid move, please enter another.'
   end
 
-  def ask_yn
+  def game_input(player, board)
+    system('clear') || system('cls')
+    self.board
+    board.length.times do |i|
+      print "#{i} "
+    end
+    print "\n"
+    print "#{player.name}, enter a column: "
+  end
+
+  def ask_yn(prompt)
+    print "#{prompt} (y/n) "
   end
 end

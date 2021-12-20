@@ -33,7 +33,7 @@ class Connect4
   end
 
   def prompt_game_input
-    @display.game_input(@players[@moves % 2])
+    @display.game_input(@players[@moves % 2], @board)
     @players[@moves % 2].game_input
   end
 
@@ -41,7 +41,7 @@ class Connect4
     input = nil
     until @board.valid_move?(input)
       input = prompt_game_input
-      puts 'Invalid move, please enter another.' unless @board.valid_move?(input)
+      @display.invalid_input unless @board.valid_move?(input)
     end
     @board.add_chip(input, @players[@moves % 2].token)
     increment_move
