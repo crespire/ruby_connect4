@@ -4,9 +4,10 @@
 
 require_relative '../lib/connect4'
 require_relative '../lib/board'
+require_relative '../lib/display'
 
 describe Connect4 do
-  let(:display) { double('Display') }
+  let(:display) { instance_double('Display') }
   let(:player) { double('Player') }
 
   describe '#show_rules' do
@@ -91,10 +92,8 @@ describe Connect4 do
 
     context 'during a player turn' do
       before do
-        allow(player1).to receive(:new)
         allow(player1).to receive(:game_input).and_return(6)
         allow(player2).to receive(:token).and_return('X')
-        allow(player2).to receive(:new)
         allow(player2).to receive(:game_input).and_return(3)
         allow(player2).to receive(:token).and_return('O')
         allow(display).to receive(:game_input)
@@ -136,7 +135,6 @@ describe Connect4 do
 
     context 'when the game is set up' do
       before do
-        allow(player).to receive(:new)
         allow(player).to receive(:game_input).and_return(6)
         allow(player).to receive(:token).and_return('X')
         allow(display).to receive(:game_input)
