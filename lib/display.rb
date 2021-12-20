@@ -22,9 +22,9 @@ class Display
 
   def rules
     puts <<~RULES
-    Welcome to Connect4. The goal is to get 4 tokens in a row.
-    Like the physical game, you can only stack tokens if there are previous ones.
-    The first to four wins!
+      Welcome to Connect4. The goal is to get 4 tokens in a row.
+      Like the physical game, you can only stack tokens if there are previous ones below.
+      Let's get started!
     RULES
   end
 
