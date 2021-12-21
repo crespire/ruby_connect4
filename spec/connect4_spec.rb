@@ -89,9 +89,9 @@ describe Connect4 do
 
     context 'during a player turn' do
       before do
-        allow(player1).to receive(:game_input).and_return(6)
+        allow(player1).to receive(:game_input).and_return('6')
         allow(player2).to receive(:token).and_return('X')
-        allow(player2).to receive(:game_input).and_return(3)
+        allow(player2).to receive(:game_input).and_return('3')
         allow(player2).to receive(:token).and_return('O')
         allow(display).to receive(:game_input)
         c4_playprompt.add_player(player1)
@@ -99,18 +99,19 @@ describe Connect4 do
       end
 
       it 'should send a message to display to prompt user' do
+        allow(player).to receive(:gets).and_return('3')
         expect(display).to receive(:game_input)
         c4_playprompt.prompt_game_input
       end
 
       it 'should send a message to player to take input and return the input' do
-        expect(player1).to receive(:game_input).and_return(6)
+        expect(player1).to receive(:game_input).and_return('6')
         input = c4_playprompt.prompt_game_input
         expect(input).to eq(6)
       end
 
       it 'should prompt the correct player, starting with one' do
-        expect(player1).to receive(:game_input).and_return(6)
+        expect(player1).to receive(:game_input).and_return('6')
         token = player1.token
         input = c4_playprompt.prompt_game_input
         expect(input).to eq(6)
@@ -118,7 +119,7 @@ describe Connect4 do
 
         c4_playprompt.instance_variable_set(:@moves, 1) # Manually increment moves
 
-        expect(player2).to receive(:game_input).and_return(3)
+        expect(player2).to receive(:game_input).and_return('3')
         token = player2.token
         input = c4_playprompt.prompt_game_input
         expect(input).to eq(3)
@@ -132,7 +133,7 @@ describe Connect4 do
 
     context 'when the game is set up' do
       before do
-        allow(player).to receive(:game_input).and_return(6)
+        allow(player).to receive(:game_input).and_return('6')
         allow(player).to receive(:token).and_return('X')
         allow(display).to receive(:game_input)
         c4_round.add_player(player)
@@ -146,21 +147,28 @@ describe Connect4 do
       end
 
       it 'should re-prompt a player when an invalid move is entered' do
-        allow(player).to receive(:game_input).and_return('1', 4)
+        allow(player).to receive(:game_input).and_return('G', '4')
         allow(display).to receive(:invalid_input)
         expect(display).to receive(:invalid_input).once
         c4_round.play_round
       end
 
+      it 'should return invalid move 3 times for three invalid moves' do
+        allow(player).to receive(:game_input).and_return('G', '-1', '10', '3')
+        allow(display).to receive(:invalid_input)
+        expect(display).to receive(:invalid_input).exactly(3).times
+        c4_round.play_round
+      end
+
       it 'sends the add_chip message with valid input' do
-        allow(player).to receive(:game_input).and_return(2)
+        allow(player).to receive(:game_input).and_return('2')
         board = c4_round.instance_variable_get(:@board)
         expect(board).to receive(:add_chip).with(2, 'X')
         c4_round.play_round
       end
 
       it 'should increment @moves after a valid player move' do
-        allow(player).to receive(:game_input).and_return(4)
+        allow(player).to receive(:game_input).and_return('4')
         c4_round.play_round
 
         moves = c4_round.instance_variable_get(:@moves)

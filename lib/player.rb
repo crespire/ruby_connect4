@@ -26,6 +26,6 @@ class Player
   ##
   # Method to get game input.
   def game_input
-    gets.chomp.to_i
+    gets.chomp
   end
 end

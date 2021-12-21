@@ -23,7 +23,7 @@ class Board
   ##
   # Checks the input +col+ (an Integer) is within range and that the column isn't full.
   def valid_move?(col)
-    return false if col.nil? || !col.is_a?(Integer) || col.negative?
+    return false if col.nil? || col.negative?
     return false if @board[col].nil?
 
     @board[col].length < HEIGHT

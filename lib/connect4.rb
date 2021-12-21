@@ -59,18 +59,20 @@ class Connect4
   ##
   # Method to get game input.
   def prompt_game_input
-    @display.game_input(@players[@moves % 2], @board)
-    @players[@moves % 2].game_input
+    valid = false
+    until valid
+      @display.game_input(@players[@moves % 2], @board)
+      ans = @players[@moves % 2].game_input
+      valid = @board.valid_move?(ans.to_i) if ans.match?(/[[:digit:]]/)
+      @display.invalid_input unless valid
+    end
+    ans.to_i
   end
 
   ##
   # Method to play one single peice
   def play_round
-    input = nil
-    until @board.valid_move?(input)
-      input = prompt_game_input
-      @display.invalid_input unless @board.valid_move?(input)
-    end
+    input = prompt_game_input
     @board.add_chip(input, @players[@moves % 2].token)
     increment_move unless @board.gameover?
   end
