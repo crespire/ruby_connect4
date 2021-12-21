@@ -49,7 +49,7 @@ class Connect4
     until valid
       @display.player_add(@tokens.length)
       name = gets.chomp
-      valid = name.length > 0
+      valid = name.length.positive?
       @display.invalid_input unless valid
     end
     add_player(Player.new(name, @tokens.shift))
