@@ -2,9 +2,15 @@
 
 # lib/display.rb
 
+##
+# This class handles the display for the game.
 class Display
+  ##
+  # Initialize method
   def initialize; end
 
+  ##
+  # Takes +board+ and renders it in console.
   def board(board)
     row_index = Board::HEIGHT - 1
     board_data = board.get_data
@@ -20,10 +26,14 @@ class Display
     end
   end
 
+  ##
+  # Command method to clear current console display.
   def clear
     system('clear') || system('cls')
   end
 
+  ##
+  # Displays the current rules of the game.
   def rules
     puts <<~RULES
       Welcome to Connect4. The goal is to get 4 tokens in a row.
@@ -32,20 +42,32 @@ class Display
     RULES
   end
 
+  ##
+  # Shows the after-game messaging.
+  #
+  # +moves+ are the number of moves in the game.
+  #
+  # +players+ are the current players in the game.
   def after(moves, players)
     winner = players[moves % 2]
     puts "The winner is #{winner.name} playing #{winner.token}!"
   end
 
+  ##
+  # Prompt to add a name for a player.
   def player_add(tokens_left)
     num = tokens_left == 2 ? 1 : 2
     print "Player #{num}, what is your name? "
   end
 
+  ##
+  # Invalid input message.
   def invalid_input
     puts 'Invalid move, please enter another.'
   end
 
+  ##
+  # Primary game input method. Displays the board and then prompts the right player for input.
   def game_input(player, board)
     clear
     self.board(board)
@@ -56,6 +78,8 @@ class Display
     print "#{player.name}, enter a column: "
   end
 
+  ##
+  # Prompts for y/n based on the +prompt+ provided.
   def ask_yn(prompt)
     print "#{prompt} (y/n) "
   end
