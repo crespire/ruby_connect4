@@ -69,8 +69,6 @@ class Display
   ##
   # Primary game input method. Displays the board and then prompts the right player for input.
   def game_input(player, board)
-    clear
-    self.board(board)
     board.length.times do |i|
       print "#{i} "
     end

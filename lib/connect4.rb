@@ -64,6 +64,8 @@ class Connect4
   ##
   # Method to get game input.
   def prompt_game_input
+    @display.clear
+    @display.board(@board)
     valid = false
     until valid
       @display.game_input(@players[@moves % 2], @board)
@@ -98,6 +100,8 @@ class Connect4
       valid = ['y','n'].include?(ans)
       @display.invalid_input unless valid
     end
+
+    ans
   end
 
   private
