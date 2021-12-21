@@ -223,7 +223,7 @@
 
           
           <div class="method-source-code" id="ask_yn-source">
-            <pre><span class="ruby-comment"># File lib/display.rb, line 83</span>
+            <pre><span class="ruby-comment"># File lib/display.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">ask_yn</span>(<span class="ruby-identifier">prompt</span>)
   <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;#{prompt} (y/n) &quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -335,8 +335,6 @@
           <div class="method-source-code" id="game_input-source">
             <pre><span class="ruby-comment"># File lib/display.rb, line 71</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">game_input</span>(<span class="ruby-identifier">player</span>, <span class="ruby-identifier">board</span>)
-  <span class="ruby-identifier">clear</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">board</span>(<span class="ruby-identifier">board</span>)
   <span class="ruby-identifier">board</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;#{i} &quot;</span>
   <span class="ruby-keyword">end</span>
@@ -374,7 +372,7 @@
           <div class="method-source-code" id="invalid_input-source">
             <pre><span class="ruby-comment"># File lib/display.rb, line 65</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">invalid_input</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;Invalid move, please enter another.&#39;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;Invalid input, please try again.&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

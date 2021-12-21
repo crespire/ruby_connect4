@@ -1,11 +1,11 @@
-Tue, 21 Dec 2021 10:43:00 -0500
-./lib/player.rb	Tue, 21 Dec 2021 10:42:58 -0500
-./lib/board.rb	Tue, 21 Dec 2021 10:42:32 -0500
-./lib/display.rb	Tue, 21 Dec 2021 10:38:29 -0500
-./lib/connect4.rb	Tue, 21 Dec 2021 10:28:47 -0500
-./README.md	Thu, 09 Dec 2021 14:01:25 -0500
-./spec/board_spec.rb	Tue, 14 Dec 2021 15:36:14 -0500
-./spec/connect4_spec.rb	Tue, 21 Dec 2021 10:16:38 -0500
+Tue, 21 Dec 2021 12:38:17 -0500
+./lib/player.rb	Tue, 21 Dec 2021 11:48:47 -0500
+./lib/board.rb	Tue, 21 Dec 2021 11:57:59 -0500
+./lib/display.rb	Tue, 21 Dec 2021 12:22:54 -0500
+./lib/connect4.rb	Tue, 21 Dec 2021 12:25:06 -0500
+./README.md	Tue, 21 Dec 2021 12:35:03 -0500
+./spec/board_spec.rb	Tue, 21 Dec 2021 11:25:30 -0500
+./spec/connect4_spec.rb	Tue, 21 Dec 2021 12:14:14 -0500
 ./spec/player_spec.rb	Tue, 21 Dec 2021 09:44:06 -0500
 ./spec/spec_helper.rb	Thu, 09 Dec 2021 13:57:33 -0500
 ./spec/display_spec.rb	Fri, 17 Dec 2021 13:12:55 -0500

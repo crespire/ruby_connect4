@@ -404,7 +404,7 @@
           <div class="method-source-code" id="valid_move-3F-source">
             <pre><span class="ruby-comment"># File lib/board.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">valid_move?</span>(<span class="ruby-identifier">col</span>)
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">col</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Integer</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">negative?</span>
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@board</span>[<span class="ruby-identifier">col</span>].<span class="ruby-identifier">nil?</span>
 
   <span class="ruby-ivar">@board</span>[<span class="ruby-identifier">col</span>].<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">HEIGHT</span>

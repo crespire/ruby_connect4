@@ -193,7 +193,7 @@
 
           
           <div class="method-source-code" id="add_player-source">
-            <pre><span class="ruby-comment"># File lib/connect4.rb, line 55</span>
+            <pre><span class="ruby-comment"># File lib/connect4.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">add_player</span>(<span class="ruby-identifier">player</span>)
   <span class="ruby-ivar">@players</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">player</span>
 <span class="ruby-keyword">end</span></pre>
@@ -226,7 +226,7 @@
 
           
           <div class="method-source-code" id="play-source">
-            <pre><span class="ruby-comment"># File lib/connect4.rb, line 80</span>
+            <pre><span class="ruby-comment"># File lib/connect4.rb, line 89</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">play</span>
   <span class="ruby-identifier">play_round</span> <span class="ruby-keyword">until</span> <span class="ruby-ivar">@board</span>.<span class="ruby-identifier">gameover?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -259,13 +259,9 @@
 
           
           <div class="method-source-code" id="play_round-source">
-            <pre><span class="ruby-comment"># File lib/connect4.rb, line 68</span>
+            <pre><span class="ruby-comment"># File lib/connect4.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">play_round</span>
-  <span class="ruby-identifier">input</span> = <span class="ruby-keyword">nil</span>
-  <span class="ruby-keyword">until</span> <span class="ruby-ivar">@board</span>.<span class="ruby-identifier">valid_move?</span>(<span class="ruby-identifier">input</span>)
-    <span class="ruby-identifier">input</span> = <span class="ruby-identifier">prompt_game_input</span>
-    <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">invalid_input</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@board</span>.<span class="ruby-identifier">valid_move?</span>(<span class="ruby-identifier">input</span>)
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">input</span> = <span class="ruby-identifier">prompt_game_input</span>
   <span class="ruby-ivar">@board</span>.<span class="ruby-identifier">add_chip</span>(<span class="ruby-identifier">input</span>, <span class="ruby-ivar">@players</span>[<span class="ruby-ivar">@moves</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span>].<span class="ruby-identifier">token</span>)
   <span class="ruby-identifier">increment_move</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@board</span>.<span class="ruby-identifier">gameover?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -298,10 +294,18 @@
 
           
           <div class="method-source-code" id="prompt_game_input-source">
-            <pre><span class="ruby-comment"># File lib/connect4.rb, line 61</span>
+            <pre><span class="ruby-comment"># File lib/connect4.rb, line 66</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">prompt_game_input</span>
-  <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">game_input</span>(<span class="ruby-ivar">@players</span>[<span class="ruby-ivar">@moves</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span>], <span class="ruby-ivar">@board</span>)
-  <span class="ruby-ivar">@players</span>[<span class="ruby-ivar">@moves</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span>].<span class="ruby-identifier">game_input</span>
+  <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">board</span>(<span class="ruby-ivar">@board</span>)
+  <span class="ruby-identifier">valid</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">until</span> <span class="ruby-identifier">valid</span>
+    <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">game_input</span>(<span class="ruby-ivar">@players</span>[<span class="ruby-ivar">@moves</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span>], <span class="ruby-ivar">@board</span>)
+    <span class="ruby-identifier">ans</span> = <span class="ruby-ivar">@players</span>[<span class="ruby-ivar">@moves</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span>].<span class="ruby-identifier">game_input</span>
+    <span class="ruby-identifier">valid</span> = <span class="ruby-ivar">@board</span>.<span class="ruby-identifier">valid_move?</span>(<span class="ruby-identifier">ans</span>.<span class="ruby-identifier">to_i</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">ans</span>.<span class="ruby-identifier">match?</span>(<span class="ruby-regexp">/[[:digit:]]/</span>)
+    <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">invalid_input</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">valid</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">ans</span>.<span class="ruby-identifier">to_i</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -334,10 +338,15 @@
           <div class="method-source-code" id="prompt_player_add-source">
             <pre><span class="ruby-comment"># File lib/connect4.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">prompt_player_add</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@tokens</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@tokens</span>.<span class="ruby-identifier">empty?</span>
 
-  <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">player_add</span>(<span class="ruby-ivar">@tokens</span>.<span class="ruby-identifier">length</span>)
-  <span class="ruby-identifier">name</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>
+  <span class="ruby-identifier">valid</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">until</span> <span class="ruby-identifier">valid</span>
+    <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">player_add</span>(<span class="ruby-ivar">@tokens</span>.<span class="ruby-identifier">length</span>)
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>
+    <span class="ruby-identifier">valid</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">positive?</span>
+    <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">invalid_input</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">valid</span>
+  <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">add_player</span>(<span class="ruby-constant">Player</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">name</span>, <span class="ruby-ivar">@tokens</span>.<span class="ruby-identifier">shift</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -369,10 +378,17 @@
 
           
           <div class="method-source-code" id="prompt_yn-source">
-            <pre><span class="ruby-comment"># File lib/connect4.rb, line 86</span>
+            <pre><span class="ruby-comment"># File lib/connect4.rb, line 95</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">prompt_yn</span>
-  <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">ask_yn</span>(<span class="ruby-string">&#39;Would you like to play again?&#39;</span>)
-  <span class="ruby-ivar">@players</span>[<span class="ruby-ivar">@moves</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span>].<span class="ruby-identifier">reply_yn</span>
+  <span class="ruby-identifier">valid</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">until</span> <span class="ruby-identifier">valid</span>
+    <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">ask_yn</span>(<span class="ruby-string">&#39;Would you like to play again?&#39;</span>)
+    <span class="ruby-identifier">ans</span> = <span class="ruby-ivar">@players</span>[<span class="ruby-ivar">@moves</span> <span class="ruby-operator">%</span> <span class="ruby-value">2</span>].<span class="ruby-identifier">reply_yn</span>
+    <span class="ruby-identifier">valid</span> = [<span class="ruby-string">&#39;y&#39;</span>,<span class="ruby-string">&#39;n&#39;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">ans</span>)
+    <span class="ruby-ivar">@display</span>.<span class="ruby-identifier">invalid_input</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">valid</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">ans</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
