@@ -43,7 +43,7 @@ class Connect4
   ##
   # Prompts to add players
   def prompt_player_add
-    return false if @tokens.empty?
+    return if @tokens.empty?
 
     valid = false
     until valid
