@@ -17,7 +17,7 @@ class Board
     return false if col.nil? || !col.is_a?(Integer)
     return false if @board[col].nil?
 
-    @board[col].length < 6
+    @board[col].length < HEIGHT
   end
 
   def add_chip(col, value)

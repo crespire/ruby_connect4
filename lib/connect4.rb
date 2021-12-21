@@ -3,6 +3,8 @@
 # lib/connect4.rb
 
 require_relative 'board'
+require_relative 'player'
+require_relative 'display'
 
 class Connect4
   def initialize(display: Display.new)
@@ -10,6 +12,7 @@ class Connect4
     @players = []
     @display = display
     @moves = 0
+    @tokens = ['○', '●']
   end
 
   def show_rules
@@ -25,7 +28,11 @@ class Connect4
   end
 
   def prompt_player_add
+    return false if @tokens.empty?
+
     @display.player_add
+    name = gets.chomp
+    add_player(Player.new(name, @tokens.shift))
   end
 
   def add_player(player)
