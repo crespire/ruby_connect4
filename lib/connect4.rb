@@ -86,8 +86,13 @@ class Connect4
   ##
   # Method to repeat game?
   def prompt_yn
-    @display.ask_yn('Would you like to play again?')
-    @players[@moves % 2].reply_yn
+    valid = false
+    until valid
+      @display.ask_yn('Would you like to play again?')
+      ans = @players[@moves % 2].reply_yn
+      valid = ['y','n'].include?(ans)
+      @display.invalid_input unless valid
+    end
   end
 
   private

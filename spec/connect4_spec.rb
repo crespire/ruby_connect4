@@ -181,19 +181,26 @@ describe Connect4 do
     subject(:c4_ynprompt) { described_class.new(display: display) }
     before do
       allow(display).to receive(:ask_yn)
+      allow(display).to receive(:invalid_input)
       allow(player).to receive(:reply_yn)
       c4_ynprompt.add_player(player)
     end
 
     it 'should send a message to display to prompt user' do
       expect(display).to receive(:ask_yn)
+      expect(player).to receive(:reply_yn).and_return('y')
       c4_ynprompt.prompt_yn
     end
 
     it 'should send a message to player to take input and return the input' do
       expect(player).to receive(:reply_yn).and_return('y')
-      input = c4_ynprompt.prompt_yn
-      expect(input).to eq('y')
+      c4_ynprompt.prompt_yn
+    end
+
+    it 'should send invalid_input once before returning proper input' do
+      expect(player).to receive(:reply_yn).and_return('A', 'y')
+      expect(display).to receive(:invalid_input).once
+      c4_ynprompt.prompt_yn
     end
   end
 
