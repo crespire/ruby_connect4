@@ -2,9 +2,9 @@
 
 TDD exercise to create a CLI Connect 4 from The Odin Project's Ruby track.
 
-Live version: https://replit.com/@crespire/rubyconnect4
-Repository: https://github.com/crespire/ruby_connect4
-Documentation: https://crespire.github.io/ruby_connect4/
+Live version: https://replit.com/@crespire/rubyconnect4  
+Repository: https://github.com/crespire/ruby_connect4  
+Documentation: https://crespire.github.io/ruby_connect4/  
 
 # Reflection
 This project was particularly tough for me because of utilizing the TDD approach. Here are the challenges I had and things I can continue to work on:
