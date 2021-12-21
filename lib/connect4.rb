@@ -45,8 +45,13 @@ class Connect4
   def prompt_player_add
     return false if @tokens.empty?
 
-    @display.player_add(@tokens.length)
-    name = gets.chomp
+    valid = false
+    until valid
+      @display.player_add(@tokens.length)
+      name = gets.chomp
+      valid = name.length > 0
+      @display.invalid_input unless valid
+    end
     add_player(Player.new(name, @tokens.shift))
   end
 

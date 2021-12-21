@@ -63,7 +63,7 @@ class Display
   ##
   # Invalid input message.
   def invalid_input
-    puts 'Invalid move, please enter another.'
+    puts 'Invalid input, please try again.'
   end
 
   ##
