@@ -33,6 +33,10 @@ describe Board do
     subject(:board_move) { described_class.new }
     let(:board_var) { board_move.instance_variable_get(:@board) }
 
+    it 'returns false when given a negative number' do
+      expect(board_move.valid_move?(-2)).to be_falsey
+    end
+
     context 'when all columns have 5 chips' do
       it 'returns true given an in-bound column' do
         board_var.each { |column| 5.times { column << 1 } }
