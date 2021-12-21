@@ -20,6 +20,10 @@ class Board
     @board[col].length < HEIGHT
   end
 
+  def length
+    @board.length
+  end
+
   def add_chip(col, value)
     return false unless valid_move?(col)
 

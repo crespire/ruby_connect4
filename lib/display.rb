@@ -20,6 +20,10 @@ class Display
     end
   end
 
+  def clear
+    system('clear') || system('cls')
+  end
+
   def rules
     puts <<~RULES
       Welcome to Connect4. The goal is to get 4 tokens in a row.
@@ -28,14 +32,14 @@ class Display
     RULES
   end
 
-  def after(board, players)
-    winner = board.last_move
-    name = players.select { |player| return player.name if player.token == winner}
-    puts "The winner is #{name}!"
+  def after(moves, players)
+    winner = players[moves % 2]
+    puts "The winner is #{winner.name} playing #{winner.token}!"
   end
 
-  def player_add
-    print "What is your name? "
+  def player_add(tokens_left)
+    num = tokens_left == 2 ? 1 : 2
+    print "Player #{num}, what is your name? "
   end
 
   def invalid_input
@@ -43,8 +47,8 @@ class Display
   end
 
   def game_input(player, board)
-    system('clear') || system('cls')
-    self.board
+    clear
+    self.board(board)
     board.length.times do |i|
       print "#{i} "
     end

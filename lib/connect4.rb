@@ -24,13 +24,15 @@ class Connect4
   end
 
   def show_after
-    @display.after(@board, @players)
+    @display.clear
+    @display.board(@board)
+    @display.after(@moves, @players)
   end
 
   def prompt_player_add
     return false if @tokens.empty?
 
-    @display.player_add
+    @display.player_add(@tokens.length)
     name = gets.chomp
     add_player(Player.new(name, @tokens.shift))
   end
@@ -51,12 +53,11 @@ class Connect4
       @display.invalid_input unless @board.valid_move?(input)
     end
     @board.add_chip(input, @players[@moves % 2].token)
-    increment_move
+    increment_move unless @board.gameover?
   end
 
   def play
     play_round until @board.gameover?
-    show_after
   end
 
   def prompt_yn

@@ -37,7 +37,11 @@ describe Connect4 do
 
     it 'should send Display the after message' do
       allow(display).to receive(:after)
+      allow(display).to receive(:clear)
+      allow(display).to receive(:board)
 
+      expect(display).to receive(:clear).once
+      expect(display).to receive(:board).once
       expect(display).to receive(:after).once
       c4_after.show_after
     end
@@ -48,17 +52,10 @@ describe Connect4 do
 
     it 'should send Display the player_add message' do
       allow(display).to receive(:player_add)
+      allow(c4_addplayer).to receive(:gets).and_return('Jim')
 
       expect(display).to receive(:player_add).once
       c4_addplayer.prompt_player_add
-    end
-
-    it "should return the new player's name" do
-      allow(display).to receive(:player_add).and_return('Jim')
-
-      expect(display).to receive(:player_add).once
-      name = c4_addplayer.prompt_player_add
-      expect(name).to eq('Jim')
     end
   end
 
@@ -196,12 +193,11 @@ describe Connect4 do
     context 'when simulating a game with one move left' do
       subject(:c4_play) { described_class.new(display: display) }
 
-      it 'should send play_round once and then send show_after' do
+      it 'should send play_round only once' do
         board = c4_play.instance_variable_get(:@board)
         allow(board).to receive(:gameover?).and_return(false, true)
 
         expect(c4_play).to receive(:play_round).once
-        expect(c4_play).to receive(:show_after).once
         c4_play.play
       end
     end
