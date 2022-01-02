@@ -94,6 +94,8 @@ describe Connect4 do
         allow(player2).to receive(:game_input).and_return('3')
         allow(player2).to receive(:token).and_return('O')
         allow(display).to receive(:game_input)
+        allow(display).to receive(:board)
+        allow(display).to receive(:clear)
         c4_playprompt.add_player(player1)
         c4_playprompt.add_player(player2)
       end
@@ -136,6 +138,8 @@ describe Connect4 do
         allow(player).to receive(:game_input).and_return('6')
         allow(player).to receive(:token).and_return('X')
         allow(display).to receive(:game_input)
+        allow(display).to receive(:board)
+        allow(display).to receive(:clear)
         c4_round.add_player(player)
         c4_round.add_player(player)
       end
